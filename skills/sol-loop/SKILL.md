@@ -54,8 +54,20 @@ only if exposed. Use `delegate_task` every round (`role: "review"`,
 
 If T3 tools are not listed, try one direct capability call. Outside T3, use
 a native Sol subagent and keep its ID. In Claude Code, use a custom subagent
-only if it is set up to run Sol. If no route runs Sol, report the blocker. Do
-not substitute a model.
+only if it is set up to run Sol. Otherwise (e.g. headless `claude -p`) use the
+Codex CLI through the local EasyCLIProxyAPI. Latest Sol: the first `-sol` slug
+from `CODEX_HOME=~/.codex-easyproxy codex debug models | grep -o '"slug":"[^"]*-sol"'`.
+Each round, write the brief to a new file outside the repo, then run one
+reviewer (foreground with a 10-minute tool timeout, or background and wait):
+
+```
+CODEX_HOME=~/.codex-easyproxy codex exec -m <sol> -s read-only --ephemeral \
+  -C <repo> -o <reply-file> - < <brief-file>
+```
+
+`<reply-file>` holds Sol's reply. Record the `model:` header line. Nonzero
+exit or an empty reply is a failure. If no route runs Sol, report the
+blocker. Do not substitute a model.
 
 Do not edit scoped files while review runs. Wait for the notice. Do not
 poll or start a second reviewer. Timeout, error, or no reply is not
@@ -95,7 +107,8 @@ review grew the diff, cut first. Do not agree just to end the loop.
 
 Start one only if budget remains and a blocker or should is open, behavior code
 changed, or approval does not cover the current behavior diff. Use a fresh
-`delegate_task` in T3, or follow up the saved native ID. Send the round 1 brief,
+`delegate_task` in T3, a fresh `codex exec` on the CLI route, or follow up the
+saved native ID. Send the round 1 brief,
 the ledger (`fixed:` / `disagree:` / `declined:` + evidence), the same base
 diff, and the change since last round. Tell Sol: open ids and changed code only.
 Mark each old id `resolved` or `still open: <reason>`.

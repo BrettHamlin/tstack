@@ -47,11 +47,16 @@ one appears.
    that could. If you are on the default branch, create a branch first.
 2. **Prove it.** Get proof for every change you made. See "Proof".
 3. **Get feedback.** Use the `sol-loop` skill to verify changes.
-4. **File the PR** with the `file-pr` skill. Rebase onto the latest default
-   branch first. Add one short line to the description that says how you proved
-   the change.
+4. **File the PR** with the `file-pr` skill. Load it with your harness's skill
+   tool and follow it as written: its layout, diagrams, and evidence rules.
+   Never write the title or description from memory. If a PR already exists
+   for the branch, use `file-pr` to rewrite its title and description. Rebase
+   onto the latest default branch first. Put how you proved the change in the
+   description's Validation section.
 5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI
-   failures. Get proof for each fix before you push it.
+   failures. Get proof for each fix before you push it. When a push changes
+   the behavior, the review guide, or the proof, run `file-pr` again to update
+   the description.
 6. **Merge** when the merge gate passes.
 7. **Report** in your final message: the PR link, the merge commit, your proof,
    and each decision you made for the user.
