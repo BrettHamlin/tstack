@@ -33,7 +33,9 @@ final report steps with a handoff. Proof and review must cover the final diff;
 recheck behavior changes and meaningful conflict fixes before handoff.
 
 Fetch the target branch and check the live PR's head, base, checks, reviews,
-and mergeability. Confirm it is open, not a draft, and not set to merge
+and mergeability. Check that the PR's title and description were written with
+the `file-pr` skill and still match the final diff and proof; if not, run
+`file-pr` again. Confirm it is open, not a draft, and not set to merge
 without the user. If someone else merged it, report that instead.
 
 - **Ready to merge:** the merge gate passes. Leave the PR open and unmerged.
