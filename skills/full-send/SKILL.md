@@ -45,6 +45,8 @@ one appears.
 1. **Finish the change.** Complete the goal from the user's request with the
    smallest change that works. Fix the case that happened, not every case
    that could. If you are on the default branch, create a branch first.
+   If the work is a new app and the `new-project` skill is installed, build
+   it with that skill, so the repo starts from a b-stack starter.
 2. **Prove it.** Get proof for every change you made. See "Proof".
 3. **Get feedback.** Use the `sol-loop` skill to verify changes.
 4. **File the PR** with the `file-pr` skill. Load it with your harness's skill
@@ -75,6 +77,9 @@ reproduction, a screenshot. Use the most direct proof the change allows:
 - Reproduce the original failure, apply the fix, then watch the same
   reproduction pass.
 - Run the checks that the repo's CI runs (typecheck, lint, tests).
+- If the repo came from a b-stack starter (it has `scripts/check.py` and
+  `tools.toml` at its root), `python3 scripts/check.py` must pass every gate
+  on the final diff. Follow its `AGENTS.md`: never weaken or bypass a gate.
 - Add one focused test that fails without the fix, when the behavior has none
   and the repo has a test setup.
 - For UI and runtime behavior, run the app and look at the change. Green mocked
