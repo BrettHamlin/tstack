@@ -83,6 +83,9 @@ Read surrounding code. Find bugs, broken callers, mismatch with intent.
 Skip style unless it hides a bug. Hold to the smallest change. Flag code,
 tests, or guards the intent does not need. Other paths, rare cases, small
 perf, extra compat: nits.
+Flag any fix that makes a check pass without fixing the cause: hardcoded or
+copied outputs, special cases for a test's input, stubs, skips, swallowed
+errors, loosened assertions. That is a blocker.
 blocker = intended case wrong. should = real bug callers will hit, in intent. nit = rest.
 Reply:
 VERDICT: APPROVE or CHANGES
@@ -94,6 +97,8 @@ S1 [blocker|should|nit] <file>:<line> <claim>. Fix: <suggestion> (stable ids)
 Check each finding and severity yourself. Another path, rare case, or
 small cost is a nit, whatever label it came with.
 
+- A finding that a fix only makes a check pass stays a blocker, unless you
+  show with evidence that the fix addresses the cause.
 - Agree: smallest fix. Prefer delete or narrow over new lock, cache,
   helper, or option. Fix the case that happened. Add one focused test
   that fails without the fix, if intent needs it.
